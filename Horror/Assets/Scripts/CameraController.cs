@@ -4,34 +4,27 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+
+    private float mouseX;
+    private float mouseY;
+
+    public Transform Player;
+    private float sensitivityMouse = 300f;
     // Start is called before the first frame update
     void Start()
     {
-        
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.W))
-        {
-            transform.Translate(Vector3.forward * Time.deltaTime * 10);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            transform.Translate(Vector3.back * Time.deltaTime * 10);
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Translate(Vector3.left * Time.deltaTime * 10);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.Translate(Vector3.right * Time.deltaTime * 10);
-        }
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
-        transform.Rotate(Vector3.up * mouseX * Time.deltaTime * 1000);
-        transform.Rotate(Vector3.left * mouseY * Time.deltaTime * 1000);
+        mouseX = Input.GetAxis("Mouse X") * sensitivityMouse * Time.deltaTime; 
+        mouseY = Input.GetAxis("Mouse Y") * sensitivityMouse * Time.deltaTime;
+
+        Player.Rotate(mouseX * new Vector3(0, 1, 0));
+
+        transform.Rotate(-mouseY * new Vector3(1, 0, 0));
+
     }
 }
